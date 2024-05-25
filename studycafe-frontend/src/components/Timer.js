@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Typography, Button, Dialog, DialogTitle, DialogContent } from '@mui/material';
 import { makeStyles } from '@mui/styles';
+import { completeGoal } from '../api';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -53,9 +54,10 @@ export default function Timer({ goal }) {
     } else if (time === 0) {
       setOpen(true);
       setIsRunning(false);
+      completeGoal(goal.id); // Mark the goal as complete and reward the user
     }
     return () => clearInterval(timer);
-  }, [isRunning, time]);
+  }, [isRunning, time, goal.id]);
 
   const handleStopResume = () => {
     setIsRunning(!isRunning);
