@@ -11,9 +11,22 @@ export default function Login() {
   const handleLogin = async () => {
     try {
       const user = await loginUser(username, password);
-      sessionStorage.setItem('userId', user.id);
-      console.log('Logged in user ID:', user.id);
-      navigate('/home');
+      if (user && user.id) {
+        sessionStorage.setItem('userId', user.id);
+        console.log('Logged in user ID:', user.id);
+        // Verify if the ID is stored
+        const storedUserId = sessionStorage.getItem('userId');
+        console.log('Stored user ID:', storedUserId);
+        //Wait for 2 seconds
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+        if (storedUserId) {
+          navigate('/home');
+        } else {
+          console.error('Failed to store user ID in sessionStorage');
+        }
+      } else {
+        console.error('Invalid user data:', user);
+      }
     } catch (error) {
       console.error('Login failed:', error);
     }

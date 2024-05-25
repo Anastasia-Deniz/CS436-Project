@@ -15,7 +15,7 @@ export default function HomePage() {
 
   useEffect(() => {
     const fetchGoalsAndRewards = async () => {
-      const userId = localStorage.getItem('userId');
+      const userId = sessionStorage.getItem('userId');
       try {
         const userGoals = await getUserGoals(userId);
         setGoals(userGoals);
